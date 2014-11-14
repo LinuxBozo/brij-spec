@@ -1,0 +1,45 @@
+[
+    {
+        'rule': 'If MyObject.zip is a zipcode, then MyObject.state should not be empty',
+        'conditions': [
+            {
+                'if': {
+                    'property':'MyObject.zip',
+                    'condition':'zipcode'
+                },
+                'then': {
+                    'property':'MyObject.state',
+                    'condition':'not_empty'
+                }
+            }
+        ],
+        'actions': []
+    },
+    {
+        'rule': 'If MyObject.first_name=Oscar, and MyObject.last_name=Meyer, then MyObject.type should = wiener',
+        'conditions': [
+            {
+                'if': {
+                    'and': [
+                        {
+                            'property':'MyObject.first_name',
+                            'condition':'equal',
+                            'value':'Oscar'
+                        },
+                        {
+                            'property':'MyObject.last_name',
+                            'condition':'equal',
+                            'value':'Meyer'
+                        }
+                    ]
+                },
+                'then': {
+                    'property':'MyObject.type',
+                    'condition':'equal',
+                    'value':'wiener'
+                }
+            }
+        ],
+        'actions': []
+    }
+]

@@ -69,9 +69,9 @@ Business Rules in JSON
   - value
  - does_not_contain
   - value
- - contains_all
+ - includes_all
   - values
- - contains_none
+ - includes_none
   - values
 
 #### Combining Conditions

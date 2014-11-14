@@ -15,25 +15,42 @@ Business Rules in JSON
  - hh_mm (NN:NN)
  - hh_mm_ss (NN:NN:NN)
  - matches_regex
+  - value
 
 #### Value Comparison
 
 ##### Numeric
 
+ - is_integer
+ - is_float
  - equal
+  - value
  - not_equal
+  - value
  - greater_than
+  - value
  - less_than
+  - value
  - greater_than_or_equal
+  - value
  - less_than_or_equal
+  - value
+ - between
+  - start
+  - end
 
 ##### String
 
  - equal
+  - value
  - not_equal
+  - value
  - starts_with
+  - value
  - ends_with
+  - value
  - contains
+  - value
  - not_empty
  - is_empty
 
@@ -45,10 +62,17 @@ Business Rules in JSON
 ##### List
 
  - in
+  - list
  - not_in
+  - list
  - contains
+  - value
  - does_not_contain
+  - value
  - contains_all
+  - values
+ - contains_none
+  - values
 
 #### Combining Conditions
 

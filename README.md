@@ -62,9 +62,9 @@ Business Rules in JSON
 ##### List
 
  - in
-  - list
+  - values
  - not_in
-  - list
+  - values
  - contains
   - value
  - does_not_contain

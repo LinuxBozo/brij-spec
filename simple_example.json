@@ -7,7 +7,7 @@
                 "condition":"zipcode"
             }
         ],
-        actions: [
+        "actions": [
             {
                 "callOnFalse": "rejectZip",
                 "args": [ "MyObject.zip" ]
@@ -27,7 +27,7 @@
                 "value":"Foo"
             }
         ],
-        actions: [
+        "actions": [
             { "returnOnFalse": "No, name was not Foo" },
             { "returnOnTrue": "Yes, name is Foo" }
         ]

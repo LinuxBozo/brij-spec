@@ -76,11 +76,10 @@ Business Rules in JSON
 
 #### Combining Conditions
 
-##### if/then
-
-##### and
-
-##### or
+ - if
+ - then
+ - and
+ - or
 
 ### Actions
 

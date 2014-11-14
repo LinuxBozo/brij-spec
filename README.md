@@ -4,6 +4,14 @@ Business Rules in JSON
 
 ## Specification Basics
 
+ - id: optional
+ - description: optional
+ - conditions: required
+    - property: required
+    - condition: required
+ - actions: optional
+ - If no actions specified, rule evaluation should just return true or false
+
 ### Conditions
 #### Formatting
 

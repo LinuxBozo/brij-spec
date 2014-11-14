@@ -1,6 +1,7 @@
 [
     {
-        "rule": "Check MyObject.zip is a proper Zipcode",
+        "id": "Rule1",
+        "description": "Check MyObject.zip is a proper Zipcode",
         "conditions": [
             {
                 "property":"MyObject.zip",
@@ -19,7 +20,8 @@
         ]
     },
     {
-        "rule": "Check MyObject.name equals Foo",
+        "id": "Rule2",
+        "description": "Check MyObject.name equals Foo",
         "conditions": [
             {
                 "property":"MyObject.name",

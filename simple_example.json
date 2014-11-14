@@ -13,7 +13,7 @@
                 "args": [ "MyObject.zip" ]
             },
             {
-                "callOnTrue": "acceptZip"
+                "callOnTrue": "acceptZip",
                 "args": []
             }
         ]

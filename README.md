@@ -1,5 +1,7 @@
 # brij-spec
 
+[![Build Status](https://travis-ci.org/LinuxBozo/brij-spec.svg?branch=master)](https://travis-ci.org/LinuxBozo/brij-spec)
+
 Business Rules in JSON. A standard, specification and schema.
 
 > We are still currently un-versioned, some core changes are being pushed out, and a version 0.0.0 will be released following [Semantic Versioning 2.0.0](SemVer.org) best practices.

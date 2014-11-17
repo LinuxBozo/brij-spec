@@ -104,8 +104,8 @@ Business Rules in JSON. A standard, specification and schema.
 
 ## Examples
 
- - [simple_example.json](raw/master/simple_example.json)
- - [advanced_example.json](raw/master/advanced_example.json)
+ - [simple_example.json](../../raw/master/simple_example.json)
+ - [advanced_example.json](../../raw/master/advanced_example.json)
 
 ## Validation
 
@@ -149,7 +149,7 @@ Options:
 ```
 
 ## Getting Involved
-We encourage anyone who's interested in participating in the formation of this standard to join the [discussions here on GitHub](issues). Also feel free to fork this project and submit new ideas to add to the `brij-spec` standard.
+We encourage anyone who's interested in participating in the formation of this standard to join the [discussions here on GitHub](../../issues). Also feel free to fork this project and submit new ideas to add to the `brij-spec` standard.
 
 ## Versioning
 `brij-spec` adheres to [Semantic Versioning 2.0.0](SemVer.org). If there is a violation of this scheme, report it as a bug. Specifically, if a patch or minor version is released and breaks backward compatibility, that version should be immediately yanked and/or a new version should be immediately released that restores compatibility. Any change that breaks the public API will only be introduced at a major-version release. As a result of this policy, you can (and should) specify any dependency on `brij-spec` by using the Pessimistic Version Constraint with two digits of precision.

@@ -2,12 +2,10 @@
     {
         "id": "Rule1",
         "description": "Check MyObject.zip is a proper Zipcode",
-        "conditions": [
-            {
-                "property":"MyObject.zip",
-                "condition":"zipcode"
-            }
-        ],
+        "rule": {
+            "property":"MyObject.zip",
+            "condition":"zipcode"
+        },
         "actions": [
             {
                 "callOnFalse": "rejectZip",
@@ -22,13 +20,11 @@
     {
         "id": "Rule2",
         "description": "Check MyObject.name equals Foo",
-        "conditions": [
-            {
-                "property":"MyObject.name",
-                "condition":"equal",
-                "value":"Foo"
-            }
-        ],
+        "rule": {
+            "property":"MyObject.name",
+            "condition":"equal",
+            "value":"Foo"
+        },
         "actions": [
             { "returnOnFalse": "No, name was not Foo" },
             { "returnOnTrue": "Yes, name is Foo" }

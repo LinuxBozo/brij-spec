@@ -6,11 +6,11 @@ Business Rules in JSON
 
  - id: optional
  - description: optional
- - conditions: required
+ - rule: required
     - property: required
     - condition: required
  - actions: optional
- - If no actions specified, rule evaluation should just return true or false
+ - If no actions specified, rule evaluation should return true or false
 
 ### Conditions
 #### Formatting

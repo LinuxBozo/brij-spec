@@ -1,0 +1,42 @@
+{
+  "name": "brij-spec",
+  "version": "0.0.1",
+  "description": "Business Rules in JSON",
+  "main": "validate.js",
+  "scripts": {
+    "test": "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LinuxBozo/brij.git"
+  },
+  "keywords": [
+    "json",
+    "rules",
+    "specification",
+    "business"
+  ],
+  "author": "M. Adam Kendall",
+  "license": "CC0",
+  "bugs": {
+    "url": "https://github.com/LinuxBozo/brij-spec/issues"
+  },
+  "homepage": "https://github.com/LinuxBozo/brij-spec",
+  "dependencies": {
+    "optimist": "^0.6.1"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-config-dir": "^0.3.2",
+    "grunt-contrib-clean": "^0.5.0",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-develop": "^0.4.0",
+    "grunt-env": "~0.4.1",
+    "grunt-mocha-istanbul": "^1.4.1",
+    "grunt-mocha-test": "^0.10.2",
+    "istanbul": "^0.2.10",
+    "mocha": "^1.18.0",
+    "must": "^0.12.0",
+    "spec-xunit-file": "0.0.1-2"
+  }
+}

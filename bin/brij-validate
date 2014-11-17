@@ -1,0 +1,44 @@
+#!/usr/bin/env node
+
+// Command line options
+var args = require('optimist')
+    .options('filename', {
+        "alias": 'f'
+    }).describe('filename', 'JSON rules file to validate')
+    .options('quiet', {
+        "default": false,
+        "alias": 'q'
+    }).describe('quiet', 'less output')
+    .usage("Validate brij rules files")
+    .options('help', {
+        "alias": 'h'
+    }).describe('help', 'this help message')
+    .alias('help', '?');
+
+var options = args.argv;
+
+if (! options.filename || options.help) {
+    args.showHelp();
+    process.exit(0);
+}
+
+var brij = require('../validate');
+var fs = require('fs');
+if (! fs.existsSync(options.filename)) {
+    console.error("File does not exist: " + options.filename);
+    process.exit(1);
+}
+
+var contents = fs.readFileSync(options.filename).toString(),
+    results = brij.validate(contents);
+
+if (results.valid) {
+    if (! options.quiet) {
+        console.log(results);
+    }
+    process.exit(0);
+} else {
+    console.error(options.filename + " is NOT valid");
+    console.error(results);
+    process.exit(1);
+}

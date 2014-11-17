@@ -2,7 +2,7 @@
 
 describe('brij.validateType', function() {
 
-    describe('when types match', function() {
+    describe('when types match and are number', function() {
         it('should return errors array of 0 length', function(done) {
             var field = {};
             field.type = 'number';
@@ -16,9 +16,21 @@ describe('brij.validateType', function() {
     describe('when types do not match', function() {
         it('should return errors array with 1 length', function(done) {
             var field = {};
+            field.type = 'number';
             var name = 'foo';
             var value = '9';
             expect(brijSpec.validateType(name, field, value).length).to.be(1);
+            done();
+        });
+    });
+
+    describe('when types match and are string', function() {
+        it('should return errors array of 0 length', function(done) {
+            var field = {};
+            field.type = 'string';
+            var name = 'foo';
+            var value = '9';
+            expect(brijSpec.validateType(name, field, value).length).to.be(0);
             done();
         });
     });

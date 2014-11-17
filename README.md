@@ -104,8 +104,8 @@ Business Rules in JSON. A standard, specification and schema.
 
 ## Examples
 
- - [simple_example.json](../../raw/master/simple_example.json)
- - [advanced_example.json](../../raw/master/advanced_example.json)
+ - [simple_example.json](../../raw/master/examples/simple_example.json)
+ - [advanced_example.json](../../raw/master/examples/advanced_example.json)
 
 ## Validation
 

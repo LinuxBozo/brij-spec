@@ -125,8 +125,8 @@ var rulefields = {
 };
 
 var actionfields = {
-    'callOnTrue': {required: false, type: 'string', additionalFields: 'args'},
-    'callOnFalse': {required: false, type: 'string', additionalFields: 'args'},
+    'callOnTrue': {required: false, type: 'string', additionalFields: ['args']},
+    'callOnFalse': {required: false, type: 'string', additionalFields: ['args']},
     'returnOnTrue': {required: false, type: 'string'},
     'returnOnFalse': {required: false, type: 'string'}
 };
@@ -134,11 +134,41 @@ var actionfields = {
 var additionalFields = {
     'args': {required: false},
     'value': {required: true},
-    'values': {required: true}
+    'values': {required: true},
+    'start': {required: true},
+    'end': {required: true}
 };
 
-var validconditions = {
-
+var validConditions = {
+    'email_address': {},
+    'zipcode': {},
+    'yyyy_mm_dd': {},
+    'mm_dd_yyyy': {},
+    'yyyy': {},
+    'hh_mm': {},
+    'hh_mm_ss': {},
+    'matches_regex': {additionalFields: ['value']},
+    'is_integer': {},
+    'is_float': {},
+    'equal': {additionalFields: ['value']},
+    'not_equal': {additionalFields: ['value']},
+    'greater_than': {additionalFields: ['value']},
+    'less_than': {additionalFields: ['value']},
+    'greater_than_or_equal': {additionalFields: ['value']},
+    'less_than_or_equal': {additionalFields: ['value']},
+    'between': {additionalFields: ['start', 'end']},
+    'starts_with': {additionalFields: ['value']},
+    'ends_with': {additionalFields: ['value']},
+    'contains': {additionalFields: ['value']},
+    'not_empty': {},
+    'is_empty': {},
+    'is_true': {},
+    'is_false': {},
+    'in': {additionalFields: ['values']},
+    'not_in': {additionalFields: ['values']},
+    'does_not_contain': {additionalFields: ['value']},
+    'includes_all': {additionalFields: ['values']},
+    'includes_none': {additionalFields: ['values']}
 };
 
 module.exports = brij;

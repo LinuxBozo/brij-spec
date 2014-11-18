@@ -31,10 +31,12 @@ brij.parse = function(data) {
 
 brij.validateType = function(name, field, value) {
     var errors = [];
-    var validFieldTypes = field.types || [field.type];
-    var valueType = value instanceof Array ? 'array' : typeof value;
-    if(validFieldTypes.indexOf(valueType) === -1) {
-        errors.push(currentRuleSet.id + ': Type for field ' + name + ', was expected to be ' + validFieldTypes.join(' or ') + ', not ' + typeof value);
+    if (field.types || field.type) {
+        var validFieldTypes = field.types || [field.type];
+        var valueType = value instanceof Array ? 'array' : typeof value;
+        if(validFieldTypes.indexOf(valueType) === -1) {
+            errors.push(currentRuleSet.id + ': Type for field ' + name + ', was expected to be ' + validFieldTypes.join(' or ') + ', not ' + typeof value);
+        }
     }
     return errors;
 };
@@ -45,10 +47,8 @@ brij.validateCondition = function(obj) {
         for (var idx in validConditions[obj.condition].additionalFields) {
             var name = validConditions[obj.condition].additionalFields[idx];
             var field = additionalFields[name];
-            if (obj[name] === undefined && field.required) {
-                errors.push(currentRuleSet.id + ' missing required additional field for ' + obj.condition + ': ' + name);
-                continue;
-            }
+            errors = errors.concat(brij.validateAdditionalField(obj.condition, field, name, obj));
+            continue;
         }
     } else {
         errors.push(currentRuleSet.id + ' does not have valid condition specified: ' + obj.condition);
@@ -62,8 +62,29 @@ brij.validateRule = function(obj) {
     return errors;
 };
 
+brij.validateAdditionalField = function(name, field, additionalName, obj) {
+    var errors = [];
+    if (obj[additionalName] === undefined && field.required) {
+        errors.push(currentRuleSet.id + ' missing required additional field for ' + name + ': ' + additionalName);
+        return errors;
+    }
+    errors = errors.concat(brij.validateType(additionalName, field, obj[additionalName]));
+    return errors;
+};
+
 brij.validateActions = function(name, obj) {
     var errors = [];
+    for (var idx in obj) {
+        for (var key in obj[idx]) {
+            if (key in actionfields) {
+                var field = actionfields[key];
+                var value = obj[idx][key];
+                errors = errors.concat(brij.validateType(key, field, value));
+            } else {
+                errors.push(currentRuleSet.id + ' invalid action specified: ' + key);
+            }
+        }
+    }
 
     return errors;
 };
@@ -83,12 +104,10 @@ brij.validateRuleSet = function(parsed) {
         }
 
         // Type checking
-        if (field.types || field.type) {
-            var typeErrors = brij.validateType(name, field, parsed[name]);
-            if (typeErrors.length > 0) {
-                errors = errors.concat(typeErrors);
-                continue;
-            }
+        var typeErrors = brij.validateType(name, field, parsed[name]);
+        if (typeErrors.length > 0) {
+            errors = errors.concat(typeErrors);
+            continue;
         }
 
         // Validation function check
@@ -150,16 +169,16 @@ var combinationfields = {
 var actionfields = {
     'callOnTrue': {required: false, type: 'string', additionalFields: ['args']},
     'callOnFalse': {required: false, type: 'string', additionalFields: ['args']},
+    'args': {required: false, type: 'array'},
     'returnOnTrue': {required: false, type: 'string'},
     'returnOnFalse': {required: false, type: 'string'}
 };
 
 var additionalFields = {
-    'args': {required: false},
-    'value': {required: true},
-    'values': {required: true},
-    'start': {required: true},
-    'end': {required: true}
+    'value': {required: true, types: ['string', 'number']},
+    'values': {required: true, type: 'array'},
+    'start': {required: true, type: 'number'},
+    'end': {required: true, type: 'number'}
 };
 
 var validConditions = {

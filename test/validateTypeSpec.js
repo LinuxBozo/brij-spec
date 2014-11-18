@@ -55,4 +55,15 @@ describe('brijSpec.validateType', function() {
         });
     });
 
+    describe('when field.type is not defined', function() {
+        it('should return errors array of 0 length', function(done) {
+            var field = {};
+            var name = 'foo';
+            var value = [];
+            var result = brijSpec.validateType(name, field, value);
+            expect(result.length).to.be(0);
+            done();
+        });
+    })
+
 });

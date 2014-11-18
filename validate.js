@@ -1,6 +1,12 @@
 'use strict';
 
 var brij = {};
+var currentRuleSet;
+
+brij.setCurrentRuleSet = function(parsed, i) {
+    currentRuleSet = parsed;
+    currentRuleSet.id = currentRuleSet.hasOwnProperty('id') ? currentRuleSet.id : 'Rule #' + i;
+};
 
 brij.parse = function(data) {
     if (typeof data !== 'string') {
@@ -28,18 +34,30 @@ brij.validateType = function(name, field, value) {
     var validFieldTypes = field.types || [field.type];
     var valueType = value instanceof Array ? 'array' : typeof value;
     if(validFieldTypes.indexOf(valueType) === -1) {
-        errors.push('Type for field ' + name + ', was expected to be ' + validFieldTypes.join(' or ') + ', not ' + typeof value);
+        errors.push(currentRuleSet.id + ': Type for field ' + name + ', was expected to be ' + validFieldTypes.join(' or ') + ', not ' + typeof value);
     }
     return errors;
 };
 
-brij.validateCondition = function(name, obj) {
+brij.validateCondition = function(obj) {
     var errors = [];
-
+    if (obj.condition in validConditions) {
+        for (var idx in validConditions[obj.condition].additionalFields) {
+            var name = validConditions[obj.condition].additionalFields[idx];
+            console.log(name);
+            var field = additionalFields[name];
+            if (obj[name] === undefined && field.required) {
+                errors.push(currentRuleSet.id + ' missing required additional field for ' + obj.condition + ': ' + name);
+                continue;
+            }
+        }
+    } else {
+        errors.push(currentRuleSet.id + ' does not have valid condition specified: ' + obj.condition);
+    }
     return errors;
 };
 
-brij.validateRule = function(name, obj) {
+brij.validateRule = function(obj) {
     var errors = [];
 
     return errors;
@@ -51,13 +69,13 @@ brij.validateActions = function(name, obj) {
     return errors;
 };
 
-brij.validateRule = function(parsed) {
+brij.validateRuleSet = function(parsed) {
     var errors = [];
     for (var name in mainfields) {
         var field = mainfields[name];
         if (parsed[name] === undefined && (!field.or || field.or && parsed[field.or] === undefined)) {
             if (field.required) {
-                errors.push('Missing required field: ' + name);
+                errors.push(currentRuleSet.id + ' missing required field: ' + name);
             }
             continue;
         } else if (parsed[name] === undefined) {
@@ -85,21 +103,24 @@ brij.validateRule = function(parsed) {
 
 brij.validate = function(content) {
 
+    // Parse our rule content
     var parsed = brij.parse(content),
         out = {'valid': false};
 
-
+    // If we have a string, there was a major error in parsing
     if (typeof parsed === 'string') {
         out.critical = parsed;
         return out;
     }
 
     var errors = [];
-
+    // Process each individually defined rule in the array
     for (var i=0; i < parsed.length; i++) {
-        errors = errors.concat(brij.validateRule(parsed[i]));
+        brij.setCurrentRuleSet(parsed[i], i);
+        errors = errors.concat(brij.validateRuleSet(currentRuleSet));
     }
 
+    // Set valid depending on number of errors
     out.valid = errors.length > 0 ? false : true;
     if (errors.length > 0) {
         out.errors = errors;
@@ -117,7 +138,10 @@ var mainfields = {
 
 var rulefields = {
     'condition': {required: true, type: 'string', validate: brij.validateCondition},
-    'property': {required: true, type: 'string'},
+    'property': {required: true, type: 'string'}
+};
+
+var combinationfields = {
     'if': {required: false, type: 'object'},
     'then': {required: false, type: 'object'},
     'and': {required: false, type: 'array'},

@@ -1,6 +1,6 @@
 'use strict';
 
-describe('brij.parse', function() {
+describe('brijSpec.parse', function() {
 
     describe('when given null', function() {
         it('must return message for Invalid data', function(done) {

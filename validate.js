@@ -44,7 +44,6 @@ brij.validateCondition = function(obj) {
     if (obj.condition in validConditions) {
         for (var idx in validConditions[obj.condition].additionalFields) {
             var name = validConditions[obj.condition].additionalFields[idx];
-            console.log(name);
             var field = additionalFields[name];
             if (obj[name] === undefined && field.required) {
                 errors.push(currentRuleSet.id + ' missing required additional field for ' + obj.condition + ': ' + name);

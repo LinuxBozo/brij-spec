@@ -3,11 +3,6 @@
 var brij = {};
 var currentRuleSet;
 
-brij.setCurrentRuleSet = function(parsed, i) {
-    currentRuleSet = parsed;
-    currentRuleSet.id = currentRuleSet.hasOwnProperty('id') ? currentRuleSet.id : 'Rule #' + i;
-};
-
 brij.parse = function(data) {
     if (typeof data !== 'string') {
         return 'Invalid data - Not a string';
@@ -29,15 +24,35 @@ brij.parse = function(data) {
     return parsed;
 };
 
-brij.validateType = function(name, field, value) {
+brij.setCurrentRuleSet = function(parsed, i) {
+    currentRuleSet = parsed;
+    currentRuleSet.id = currentRuleSet.hasOwnProperty('id') ? currentRuleSet.id : 'Rule #' + i;
+};
+
+brij.validateActions = function(name, obj) {
     var errors = [];
-    if (field.types || field.type) {
-        var validFieldTypes = field.types || [field.type];
-        var valueType = value instanceof Array ? 'array' : typeof value;
-        if(validFieldTypes.indexOf(valueType) === -1) {
-            errors.push(currentRuleSet.id + ': Type for field ' + name + ', was expected to be ' + validFieldTypes.join(' or ') + ', not ' + typeof value);
+    for (var idx in obj) {
+        for (var key in obj[idx]) {
+            if (key in actionfields) {
+                var field = actionfields[key];
+                var value = obj[idx][key];
+                errors = errors.concat(brij.validateType(key, field, value));
+            } else {
+                errors.push(currentRuleSet.id + ' invalid action specified: ' + key);
+            }
         }
     }
+
+    return errors;
+};
+
+brij.validateAdditionalField = function(name, field, additionalName, obj) {
+    var errors = [];
+    if (obj[additionalName] === undefined && field.required) {
+        errors.push(currentRuleSet.id + ' missing required additional field for ' + name + ': ' + additionalName);
+        return errors;
+    }
+    errors = errors.concat(brij.validateType(additionalName, field, obj[additionalName]));
     return errors;
 };
 
@@ -56,35 +71,8 @@ brij.validateCondition = function(obj) {
     return errors;
 };
 
-brij.validateRule = function(obj) {
+brij.validateRule = function(name, obj) {
     var errors = [];
-
-    return errors;
-};
-
-brij.validateAdditionalField = function(name, field, additionalName, obj) {
-    var errors = [];
-    if (obj[additionalName] === undefined && field.required) {
-        errors.push(currentRuleSet.id + ' missing required additional field for ' + name + ': ' + additionalName);
-        return errors;
-    }
-    errors = errors.concat(brij.validateType(additionalName, field, obj[additionalName]));
-    return errors;
-};
-
-brij.validateActions = function(name, obj) {
-    var errors = [];
-    for (var idx in obj) {
-        for (var key in obj[idx]) {
-            if (key in actionfields) {
-                var field = actionfields[key];
-                var value = obj[idx][key];
-                errors = errors.concat(brij.validateType(key, field, value));
-            } else {
-                errors.push(currentRuleSet.id + ' invalid action specified: ' + key);
-            }
-        }
-    }
 
     return errors;
 };
@@ -114,6 +102,18 @@ brij.validateRuleSet = function(parsed) {
         if (typeof field.validate === 'function') {
             // Validation is expected to return an array of errors (empty means no errors)
             errors = errors.concat(field.validate(name, parsed[name]));
+        }
+    }
+    return errors;
+};
+
+brij.validateType = function(name, field, value) {
+    var errors = [];
+    if (field.types || field.type) {
+        var validFieldTypes = field.types || [field.type];
+        var valueType = value instanceof Array ? 'array' : typeof value;
+        if(validFieldTypes.indexOf(valueType) === -1) {
+            errors.push(currentRuleSet.id + ': Type for field ' + name + ', was expected to be ' + validFieldTypes.join(' or ') + ', not ' + typeof value);
         }
     }
     return errors;

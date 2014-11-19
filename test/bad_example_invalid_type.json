@@ -1,0 +1,8 @@
+[
+    {
+        "id": "invalid_type_rule",
+        "description": "bar",
+        "rule": "",
+        "actions": []
+    }
+]

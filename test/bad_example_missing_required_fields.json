@@ -1,0 +1,7 @@
+[
+    {
+        "id": "missing_required_field_rule",
+        "description": "bar",
+        "actions": []
+    }
+]

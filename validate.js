@@ -122,10 +122,8 @@ brij.validateRuleSet = function(parsed) {
     var errors = [];
     for (var name in mainfields) {
         var field = mainfields[name];
-        if (parsed[name] === undefined && (!field.or || field.or && parsed[field.or] === undefined)) {
-            if (field.required) {
-                errors.push(currentRuleSet.id + ' missing required field: ' + name);
-            }
+        if (parsed[name] === undefined && field.required) {
+            errors.push(currentRuleSet.id + ' missing required field: ' + name);
             continue;
         } else if (parsed[name] === undefined) {
             // It's empty, but not necessary

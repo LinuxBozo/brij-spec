@@ -85,6 +85,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-develop');
     grunt.loadNpmTasks('grunt-env');
     grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-release');
 
     // Register group tasks
     grunt.registerTask('clean_all', [ 'clean:node_modules', 'clean:coverage', 'npm_install' ]);

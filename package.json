@@ -34,6 +34,7 @@
     "grunt-env": "~0.4.1",
     "grunt-mocha-istanbul": "^1.4.1",
     "grunt-mocha-test": "^0.10.2",
+    "grunt-release": "^0.7.0",
     "istanbul": "^0.2.10",
     "mocha": "^1.18.0",
     "must": "^0.12.0",

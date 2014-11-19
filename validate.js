@@ -73,7 +73,48 @@ brij.validateCondition = function(obj) {
 
 brij.validateRule = function(name, obj) {
     var errors = [];
+    var comboFound = false;
+    for (var comboname in combinationfields) {
+        if (comboname in obj) {
+            comboFound = true;
+            // We've hit one of combination fields
+            var typeErrors = brij.validateType(comboname, combinationfields[comboname], obj[comboname]);
+            if (typeErrors.length > 0 ) {
+                errors = errors.concat(typeErrors);
+                continue;
+            }
+            // Recurse to find the actual condition
+            var recurseObj = obj[comboname];
+            if (recurseObj instanceof Array) {
+                // We hit and/or, so we need to get at the actual objects for recursing
+                for(var idx in recurseObj) {
+                    errors = errors.concat(brij.validateRule(comboname, recurseObj[idx]));
+                }
+            } else {
+                errors = errors.concat(brij.validateRule(comboname, recurseObj));
+            }
+        }
+    }
+    if (! comboFound) {
+        // if we didn't find our combination fields, must be the condition
+        errors = errors.concat(brij.validateRuleFields(obj));
+    }
+    return errors;
+};
 
+brij.validateRuleFields = function(obj) {
+    var errors = [];
+    for (var rulename in rulefields) {
+        var field = rulefields[rulename];
+        if (obj[rulename] === undefined && field.required) {
+            errors.push(currentRuleSet.id + ' missing required field: ' + rulename);
+            continue;
+        }
+        if (typeof field.validate === 'function') {
+            errors = errors.concat(field.validate(obj));
+        }
+        continue;
+    }
     return errors;
 };
 

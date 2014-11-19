@@ -52,7 +52,7 @@ describe('brijSpec.validate', function() {
         });
     });
 
-    describe('when given rules with missing required rules field', function() {
+    describe('when given rules with missing required rules field and missing not required description field', function() {
         it('should return json object with valid property equal false, and errors array of 1 length', function(done) {
             var result = brijSpec.validate(missingRequiredRules);
             expect(result).to.have.property('valid');

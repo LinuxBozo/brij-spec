@@ -4,34 +4,58 @@
 
 Business Rules in JSON. A standard, specification and schema.
 
-> We are still currently un-versioned, some core changes are being pushed out, and a version 0.0.0 will be released following [Semantic Versioning 2.0.0](SemVer.org) best practices.
+> We are currently in 0.x.x [versioning](#versioning): some core changes are still being pushed out. A version 1.0.0 will be released following best practices when identified as final.
 
 ## Specification Basics
 
- - id: optional
- - description: optional
- - rule: required
-    - property: required
-    - condition: required
- - actions: optional
- - If no actions specified, rule evaluation should return true or false
+A BRIJ compliant file is a JSON document that contains an array that is a list of objects for each of your rule definitions. In the simplest form, a BRIJ compliant document looks like this:
+```json
+[
+  {
+    "rule": {
+      "condition": "email_address",
+      "property": "user.email"
+    }
+  }
+]
+```
 
-### Conditions
-#### Formatting
+Each rule object in the array is defined by the following main properties:
 
- - email_address (user@domain.topleveldomain)
- - zipcode (NNNNN or NNNNN-NNNN)
- - yyyy_mm_dd (NNNN-NN-NN or NNNN/NN/NN)
- - mm_dd_yyyy (NN-NN-NNNN or NN/NN/NNNN)
- - yyyy (NNNN)
- - hh_mm (NN:NN)
- - hh_mm_ss (NN:NN:NN)
+ - id: *optional*
+ - description: *optional*
+ - rule: **required**
+    - property: **required**
+    - condition: **required**
+ - actions: *optional*
+
+Unless custom actions are defined, the engine should simply evaluate the defined rule as boolean true or false.
+
+### Defining a Rule
+
+#### Valid Conditions
+
+##### Custom function call
+ - call
+  - function
+
+##### Formatting
+
+ - email_address
+ - zipcode
+ - yyyy_mm_dd_hh_mm_ss
+ - yyyy_mm_dd_hh_mm
+ - yyyy_mm_dd
+ - mm_dd_yyyy
+ - yyyy
+ - hh_mm
+ - hh_mm_ss
  - matches_regex
   - value
 
-#### Value Comparison
+##### Value Comparison
 
-##### Numeric
+###### Numeric
 
  - is_integer
  - is_float
@@ -51,7 +75,7 @@ Business Rules in JSON. A standard, specification and schema.
   - start
   - end
 
-##### String
+###### String
 
  - equal
   - value
@@ -66,12 +90,12 @@ Business Rules in JSON. A standard, specification and schema.
  - not_empty
  - is_empty
 
-##### Boolean
+###### Boolean
 
  - is_true
  - is_false
 
-##### List
+###### List
 
  - in
   - values
@@ -93,7 +117,7 @@ Business Rules in JSON. A standard, specification and schema.
  - and
  - or
 
-### Actions
+### Defining Actions
 
  - callOnTrue
   - args

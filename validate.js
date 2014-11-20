@@ -217,12 +217,16 @@ var additionalFields = {
     'value': {required: true, types: ['string', 'number']},
     'values': {required: true, type: 'array'},
     'start': {required: true, type: 'number'},
-    'end': {required: true, type: 'number'}
+    'end': {required: true, type: 'number'},
+    'function': {required: true, type: 'string'},
 };
 
 var validConditions = {
+    'call': {additionalFields: ['function']},
     'email_address': {},
     'zipcode': {},
+    'yyyy_mm_dd_hh_mm_ss': {},
+    'yyyy_mm_dd_hh_mm': {},
     'yyyy_mm_dd': {},
     'mm_dd_yyyy': {},
     'yyyy': {},

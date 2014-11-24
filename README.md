@@ -61,15 +61,27 @@ Unless custom actions are defined, the engine should simply evaluate the defined
  - is_float
  - equal
   - value
+ - equal_property
+  - value
  - not_equal
+  - value
+ - not_equal_property
   - value
  - greater_than
   - value
+ - greater_than_property
+  - value
  - less_than
+  - value
+ - less_than_property
   - value
  - greater_than_or_equal
   - value
+ - greater_than_or_equal_property
+  - value
  - less_than_or_equal
+  - value
+ - less_than_or_equal_property
   - value
  - between
   - start
@@ -79,7 +91,11 @@ Unless custom actions are defined, the engine should simply evaluate the defined
 
  - equal
   - value
+ - equal_property
+  - value
  - not_equal
+  - value
+ - not_equal_property
   - value
  - starts_with
   - value

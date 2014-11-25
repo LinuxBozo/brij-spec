@@ -1,6 +1,6 @@
 {
   "name": "brij-spec",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Business Rules in JSON",
   "main": "validate.js",
   "scripts": {

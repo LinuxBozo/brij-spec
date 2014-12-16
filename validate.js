@@ -33,8 +33,8 @@ brij.validateActions = function(name, obj) {
     var errors = [];
     for (var idx in obj) {
         for (var key in obj[idx]) {
-            if (key in actionfields) {
-                var field = actionfields[key];
+            if (key in brij.ACTION_FIELDS) {
+                var field = brij.ACTION_FIELDS[key];
                 var value = obj[idx][key];
                 errors = errors.concat(brij.validateType(key, field, value));
             } else {
@@ -58,10 +58,10 @@ brij.validateAdditionalField = function(name, field, additionalName, obj) {
 
 brij.validateCondition = function(obj) {
     var errors = [];
-    if (obj.condition in validConditions) {
-        for (var idx in validConditions[obj.condition].additionalFields) {
-            var name = validConditions[obj.condition].additionalFields[idx];
-            var field = additionalFields[name];
+    if (obj.condition in brij.VALID_CONDITIONS) {
+        for (var idx in brij.VALID_CONDITIONS[obj.condition].additionalFields) {
+            var name = brij.VALID_CONDITIONS[obj.condition].additionalFields[idx];
+            var field = brij.ADDITIONAL_FIELDS[name];
             errors = errors.concat(brij.validateAdditionalField(obj.condition, field, name, obj));
             continue;
         }
@@ -74,11 +74,11 @@ brij.validateCondition = function(obj) {
 brij.validateRule = function(name, obj) {
     var errors = [];
     var comboFound = false;
-    for (var comboname in combinationfields) {
+    for (var comboname in brij.COMBINATION_FIELDS) {
         if (comboname in obj) {
             comboFound = true;
             // We've hit one of combination fields
-            var typeErrors = brij.validateType(comboname, combinationfields[comboname], obj[comboname]);
+            var typeErrors = brij.validateType(comboname, brij.COMBINATION_FIELDS[comboname], obj[comboname]);
             if (typeErrors.length > 0 ) {
                 errors = errors.concat(typeErrors);
                 continue;
@@ -104,8 +104,8 @@ brij.validateRule = function(name, obj) {
 
 brij.validateRuleFields = function(obj) {
     var errors = [];
-    for (var rulename in rulefields) {
-        var field = rulefields[rulename];
+    for (var rulename in brij.RULE_FIELDS) {
+        var field = brij.RULE_FIELDS[rulename];
         if (obj[rulename] === undefined && field.required) {
             errors.push(currentRuleSet.id + ' missing required field: ' + rulename);
             continue;
@@ -120,8 +120,8 @@ brij.validateRuleFields = function(obj) {
 
 brij.validateRuleSet = function(parsed) {
     var errors = [];
-    for (var name in mainfields) {
-        var field = mainfields[name];
+    for (var name in brij.MAIN_FIELDS) {
+        var field = brij.MAIN_FIELDS[name];
         if (parsed[name] === undefined && field.required) {
             errors.push(currentRuleSet.id + ' missing required field: ' + name);
             continue;
@@ -186,26 +186,26 @@ brij.validate = function(content) {
     return out;
 };
 
-var mainfields = {
+brij.MAIN_FIELDS = {
     'id': {required: false, type: 'string'},
     'description': {required: false, type: 'string'},
     'rule': {required: true, type: 'object', validate: brij.validateRule},
     'actions': {required: false, type: 'array', validate: brij.validateActions}
 };
 
-var rulefields = {
+brij.RULE_FIELDS = {
     'condition': {required: true, type: 'string', validate: brij.validateCondition},
     'property': {required: true, type: 'string'}
 };
 
-var combinationfields = {
+brij.COMBINATION_FIELDS = {
     'if': {required: false, type: 'object'},
     'then': {required: false, type: 'object'},
     'and': {required: false, type: 'array'},
     'or': {required: false, type: 'array'}
 };
 
-var actionfields = {
+brij.ACTION_FIELDS = {
     'callOnTrue': {required: false, type: 'string', additionalFields: ['args']},
     'callOnFalse': {required: false, type: 'string', additionalFields: ['args']},
     'args': {required: false, type: 'array'},
@@ -213,7 +213,7 @@ var actionfields = {
     'returnOnFalse': {required: false, type: 'string'}
 };
 
-var additionalFields = {
+brij.ADDITIONAL_FIELDS = {
     'value': {required: true, types: ['string', 'number']},
     'values': {required: true, type: 'array'},
     'start': {required: true, type: 'number'},
@@ -221,7 +221,7 @@ var additionalFields = {
     'function': {required: true, type: 'string'},
 };
 
-var validConditions = {
+brij.VALID_CONDITIONS = {
     'call': {additionalFields: ['function']},
     'email_address': {},
     'zipcode': {},

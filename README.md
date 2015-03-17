@@ -1,6 +1,7 @@
 # brij-spec
 
-[![Build Status](https://travis-ci.org/LinuxBozo/brij-spec.svg?branch=master)](https://travis-ci.org/LinuxBozo/brij-spec)
+[![Build Status](https://travis-ci.org/LinuxBozo/brij-spec.svg)](https://travis-ci.org/LinuxBozo/brij-spec)
+[![Coverage Status](https://coveralls.io/repos/LinuxBozo/brij-spec/badge.svg)](https://coveralls.io/r/LinuxBozo/brij-spec)
 
 Business Rules in JSON. A standard, specification and schema.
 

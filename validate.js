@@ -13,7 +13,7 @@ brij.parse = function(data) {
     } catch (e) {
         return 'Invalid JSON - ' + e.toString();
     }
-    if (typeof parsed !== 'object' || parsed === null || ! parsed instanceof Array) {
+    if (typeof parsed !== 'object' || parsed === null) {
         return 'Invalid brij JSON - not an object: got instead: ' + typeof parsed;
     }
 

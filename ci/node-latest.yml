@@ -1,0 +1,7 @@
+---
+platform: linux
+image: "docker:///node#latest"
+inputs:
+- name: brij-spec
+run:
+  path: brij-spec/.ci-unit.sh

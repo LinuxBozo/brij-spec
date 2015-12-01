@@ -1,0 +1,41 @@
+---
+resources:
+- name: brij-spec
+  type: git
+  source:
+    uri: https://github.com/LinuxBozo/brij-spec.git
+    branch: master
+
+jobs:
+  - name: test-0.10
+    plan:
+    - get: brij-spec
+      trigger: true
+    - task: unit
+      file: brij-spec/ci/node-0.10.yml
+  - name: test-0.12
+    plan:
+    - get: brij-spec
+      trigger: true
+    - task: unit
+      file: brij-spec/ci/node-0.12.yml
+  - name: test-4.x
+    plan:
+    - get: brij-spec
+      trigger: true
+    - task: unit
+      file: brij-spec/ci/node-4.x.yml
+  - name: test-latest
+    plan:
+    - get: brij-spec
+      trigger: true
+    - task: unit
+      file: brij-spec/ci/node-latest.yml
+
+groups:
+- name: tests
+  jobs:
+  - test-0.10
+  - test-0.12
+  - test-4.x
+  - test-latest

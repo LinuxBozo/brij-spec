@@ -3,5 +3,7 @@ platform: linux
 image: "docker:///node#latest"
 inputs:
 - name: brij-spec
+  path: .
 run:
-  path: brij-spec/.ci-unit.sh
+  path: npm
+  args: ["run", "ci"]

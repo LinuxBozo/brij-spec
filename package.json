@@ -4,8 +4,9 @@
   "description": "Business Rules in JSON",
   "main": "validate.js",
   "scripts": {
+    "preci": "node --version",
     "test": "grunt test",
-    "ci": "npm install -g grunt-cli && npm install && npm test"
+    "ci": "npm install -g grunt-cli > /dev/null 2>&1 && npm install > /dev/null 2>&1 && npm test"
   },
   "repository": {
     "type": "git",

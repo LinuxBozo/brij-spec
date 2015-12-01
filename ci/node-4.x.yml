@@ -1,0 +1,9 @@
+---
+platform: linux
+image: "docker:///node#4"
+inputs:
+- name: brij-spec
+  path: .
+run:
+  path: npm
+  args: ["run", "ci"]
